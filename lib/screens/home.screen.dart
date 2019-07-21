@@ -77,11 +77,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: TaxiDrawer(),
-      body: GestureDetector(
-        onHorizontalDragDown: (_) {
-          provider.initCustomers();
-          setState(() {
-            _isSearchable = false;
+      body: RefreshIndicator(
+        displacement: 100,
+        onRefresh: () {
+          return Future.delayed(Duration.zero, () {
+            provider.initCustomers();
+            setState(() {
+              _isSearchable = false;
+            });
           });
         },
         child: _buildBody(),
