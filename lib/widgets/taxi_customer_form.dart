@@ -40,8 +40,6 @@ class _TaxiCustomerFormState extends State<TaxiCustomerForm> {
             },
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-            width: double.infinity,
             child: TaxiButton(
               text: widget.customer.id == null
                   ? 'Save Customer'

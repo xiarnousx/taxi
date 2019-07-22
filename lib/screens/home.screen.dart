@@ -77,18 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: TaxiDrawer(),
-      body: RefreshIndicator(
-        displacement: 100,
-        onRefresh: () {
-          return Future.delayed(Duration.zero, () {
-            provider.initCustomers();
-            setState(() {
-              _isSearchable = false;
-            });
-          });
-        },
-        child: _buildBody(),
-      ),
+      body: _buildBody(),
     );
   }
 
@@ -117,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
     CustomerProvider provider = CustomerProvider.getInstance(context: context);
     var customers = provider.customers;
 
-    return ListView.separated(
+    Widget listView = ListView.separated(
       itemCount: customers.length,
       separatorBuilder: (_, int index) => Container(
         decoration: TaxiBorderBottom.get(color: Colors.amber[100]),
@@ -150,6 +139,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
+    );
+
+    return RefreshIndicator(
+      displacement: 60,
+      backgroundColor: Colors.black38,
+      onRefresh: () {
+        return Future.delayed(Duration.zero, () {
+          provider.initCustomers();
+          setState(() {
+            _isSearchable = false;
+          });
+        });
+      },
+      child: listView,
     );
   }
 
