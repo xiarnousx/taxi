@@ -67,7 +67,7 @@ class OrderDB extends Base<Order> {
     Future.delayed(Duration.zero, () async {
       var dbClinet = await db;
       final List<Map> res = await dbClinet.rawQuery(
-          'SELECT SUM(total) as Total from orders where customerId = $customerId and status = ${STATUS.open.index}');
+          'SELECT SUM(total) as Total from orders where customerId = $customerId and status != ${STATUS.closed.index}');
       if (res.length <= 0) {
         return null;
       }
@@ -75,7 +75,7 @@ class OrderDB extends Base<Order> {
       double total = res.first['Total'];
 
       await dbClinet.rawQuery(
-          'UPDATE orders set status= ${STATUS.closed.index} where customerId = $customerId and status != ${STATUS.remaining.index}');
+          'UPDATE orders set status= ${STATUS.closed.index} where customerId = $customerId and status != ${STATUS.closed.index}');
       if (total > paidAmount) {
         Order order = Order(
           customerId: customerId,

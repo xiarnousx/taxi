@@ -11,7 +11,7 @@ class Db {
     String appDocPath = appDocDir.path;
 
     return openDatabase(
-      join(appDocPath, 'taxi_database_v6.db'),
+      join(appDocPath, 'taxi_database_v7.db'),
       onCreate: (db, version) {
         String customersTable = """
         CREATE TABLE IF NOT EXISTS customers(
@@ -32,8 +32,18 @@ class Db {
           );
         """;
 
+        String addDropOffNote = """
+        ALTER TABLE orders ADD drop_note TEXT default null;
+        """;
+
+        String addDeliveryNote = """
+        Alter TABLE orders ADD delivery_note TEXT default null;
+        """;
+
         db.execute(customersTable);
         db.execute(ordersTable);
+        db.execute(addDropOffNote);
+        db.execute(addDeliveryNote);
       },
       version: 1,
     );

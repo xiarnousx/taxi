@@ -55,14 +55,11 @@ class _TaxiPaymentDialogState extends State<TaxiPaymentDialog> {
             onSaved: (val) {
               order.total = double.parse(val);
             },
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: true,
+            ),
             decoration: InputDecoration(
-              labelText: 'Payment Amount',
-              icon: Container(
-                padding: EdgeInsets.only(top: 15, left: 20, right: 0),
-                margin: EdgeInsets.only(right: 0),
-                child: Icon(Icons.attach_money),
-              ),
+              labelText: 'Payment Amount LBP x 1000',
             ),
           ),
           RadioListTile(
@@ -95,6 +92,36 @@ class _TaxiPaymentDialogState extends State<TaxiPaymentDialog> {
               _message,
               style: TextStyle(
                 color: Colors.red,
+              ),
+            ),
+          if (_type == TYPE.delivery.index)
+            TextFormField(
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Delivery From is required.';
+                }
+                return null;
+              },
+              onSaved: (val) {
+                order.delivery_note = val;
+              },
+              decoration: InputDecoration(
+                labelText: 'Delivery From',
+              ),
+            ),
+          if (_type == TYPE.drop.index)
+            TextFormField(
+              validator: (val) {
+                if (val.isEmpty) {
+                  return 'Drop location is required.';
+                }
+                return null;
+              },
+              onSaved: (val) {
+                order.drop_note = val;
+              },
+              decoration: InputDecoration(
+                labelText: 'Drop Location',
               ),
             ),
           Divider(),

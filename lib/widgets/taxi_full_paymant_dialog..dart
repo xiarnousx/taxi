@@ -65,12 +65,7 @@ class _TaxiFullPaymentDialogState extends State<TaxiFullPaymentDialog> {
               },
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Payment Amount',
-                icon: Container(
-                  padding: EdgeInsets.only(top: 15, left: 20, right: 0),
-                  margin: EdgeInsets.only(right: 0),
-                  child: Icon(Icons.attach_money),
-                ),
+                labelText: 'Payment Amount LBP x1000',
               ),
             ),
           ),

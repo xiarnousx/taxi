@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:taxi/helpers.dart/taxi_border_bottom.dart';
 import 'package:taxi/models/customer.p.dart';
@@ -120,13 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListTile(
             leading: Icon(Icons.person),
             title: Text(customer.name),
-            subtitle: Text(
-              'Amount to pay: \$${customer.amountDue}',
-              style: TextStyle(
-                color: Colors.amber,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            subtitle: _buildAmountDue(customer.amountDue),
             trailing: Icon(Icons.arrow_right),
             onTap: () {
               Navigator.of(context)
@@ -218,6 +213,29 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAmountDue(double amountDue) {
+    final formater = NumberFormat("#,##0.00", "en_US");
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Amount Due: LBP ${formater.format(amountDue * 1000)}',
+          style: TextStyle(
+            color: Colors.amber,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          'Amount Due: \$${formater.format((amountDue * 1000) / 1500)}',
+          style: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

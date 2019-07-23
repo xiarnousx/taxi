@@ -35,7 +35,10 @@ class OrderScreen extends StatelessWidget {
         actions: <Widget>[
           if (provider.orders.length > 0)
             IconButton(
-              icon: Icon(Icons.payment),
+              icon: Icon(
+                Icons.payment,
+                size: 35,
+              ),
               color: Colors.greenAccent,
               tooltip: 'Pay Them All',
               onPressed: () => showDialog(
@@ -48,7 +51,10 @@ class OrderScreen extends StatelessWidget {
                   }),
             ),
           IconButton(
-            icon: Icon(Icons.add_box),
+            icon: Icon(
+              Icons.add_box,
+              size: 35,
+            ),
             color: Colors.amber,
             tooltip: 'Add Payment',
             onPressed: () => showDialog(
@@ -101,12 +107,18 @@ class OrderScreen extends StatelessWidget {
                 color: Colors.black54,
                 child: ListTile(
                   subtitle: _getSubTitle(order),
-                  leading: Icon(Icons.attach_money),
+                  leading: Text(
+                    'x1000',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 11.0,
+                    ),
+                  ),
                   title: _getOrderType(order.type),
                   trailing: Chip(
                     backgroundColor: Colors.amber,
                     label: Text(
-                      "\$${order.total}",
+                      "LBP ${order.total}",
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
@@ -135,8 +147,21 @@ class OrderScreen extends StatelessWidget {
 
   Widget _getSubTitle(Order order) {
     if (order.type != TYPE.remaining.index) {
-      return Text(
-          'Placed On: ${DateFormat.yMMMMEEEEd().format(DateTime.parse(order.placedOn))}');
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+              'Placed On: ${DateFormat.yMMMMEEEEd().format(DateTime.parse(order.placedOn))}'),
+          Text(
+              TYPE.drop.index == order.type
+                  ? 'Drop off @ ${order.drop_note}'
+                  : 'Delivery from ${order.delivery_note}',
+              style: TextStyle(
+                color: Colors.amber,
+                fontWeight: FontWeight.bold,
+              )),
+        ],
+      );
     }
 
     return Column(
@@ -144,9 +169,9 @@ class OrderScreen extends StatelessWidget {
       children: <Widget>[
         Text(
             'Placed On: ${DateFormat.yMMMMEEEEd().format(DateTime.parse(order.placedOn))}'),
-        Text('Amount Paid \$${order.lumpsum_payment}',
+        Text('Amount Paid LBP ${order.lumpsum_payment}',
             style: TextStyle(
-              color: Colors.amber,
+              color: Colors.amber[50],
               fontWeight: FontWeight.bold,
             )),
       ],

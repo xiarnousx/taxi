@@ -15,6 +15,8 @@ class Order {
   int type;
   int status;
   String placedOn;
+  String drop_note;
+  String delivery_note;
 
   Order({
     this.customerId,
@@ -23,6 +25,8 @@ class Order {
     this.placedOn,
     this.status,
     this.lumpsum_payment,
+    this.delivery_note,
+    this.drop_note,
   });
 
   Order.empty()
@@ -32,6 +36,8 @@ class Order {
         lumpsum_payment = 0.0,
         type = TYPE.drop.index,
         status = STATUS.open.index,
+        delivery_note = '',
+        drop_note = '',
         placedOn = DateTime.now().toString();
 
   Order.fromMap(Map<String, dynamic> map)
@@ -41,6 +47,8 @@ class Order {
         lumpsum_payment = map['lumpsum_payment'],
         type = map['type'],
         status = map['status'],
+        drop_note = map['drop_note'] ?? '',
+        delivery_note = map['delivery_note'] ?? '',
         placedOn = map['placedOn'];
 
   Map<String, dynamic> toMap() {
@@ -50,6 +58,8 @@ class Order {
       "lumpsum_payment": lumpsum_payment,
       "type": type,
       "status": status,
+      "drop_note": drop_note,
+      "delivery_note": delivery_note,
       "placedOn": placedOn,
     };
 
